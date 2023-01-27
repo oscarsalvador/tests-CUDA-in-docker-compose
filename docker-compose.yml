@@ -1,0 +1,50 @@
+version: "3.6"
+
+services:
+  # https://docs.docker.com/compose/gpu-support/
+  test:
+    image: nvidia/cuda:11.8.0-devel-ubuntu22.04
+    command: nvidia-smi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  cuda:
+    image: nvidia/cuda:11.8.0-devel-ubuntu22.04
+    command: nvidia-smi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    # user: "1000:1000"       
+    working_dir: /source-files
+    volumes:
+      - .:/source-files
+  # docker-compose run cuda bash
+
+  cudaless:
+    image: ubuntu:lateset
+    
+
+  # https://medium.com/@mmnshkmr/manjaro-setup-tensorflow-docker-container-w-nvidia-gpu-cacd0714f9b
+  tensorflow:
+    image: tensorflow/tensorflow:latest-gpu
+    volumes:
+      - ../fullstack-verificacion:/fullstack-verficacion
+      # - ./prueba:/prueba
+      - /usr/local/bin/terraform:/usr/local/bin/terraform
+    working_dir: /fullstack-verficacion
+      # - 
+    command: "bash"
+    # entrypoint: /bin/bash
+    # stdin_open: true
+    # tty: true
+    # docker-compose run azcli bash
+    # docker-compose run --rm azcli bash

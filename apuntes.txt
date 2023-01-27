@@ -1,0 +1,4 @@
+ir parte por parte, sacar practica con nvidia-docker, despues añadir GUI
+	para gui, ver x11docker
+		no parece compatible con nvidia-docker-toolkit, son mods separadas
+
